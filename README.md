@@ -1,7 +1,4 @@
-
 Black-Scholes Option Pricing Model in Python
-
-
 This project implements the Black-Scholes model to calculate the prices of European-style call and put options. The Black-Scholes model is a widely used analytical solution for pricing options, which allows traders, investors, and researchers to estimate the fair market value of European options on non-dividend-paying stocks. The project includes calculations for implied volatility and probability of options expiring in-the-money.
 
 Features
@@ -10,63 +7,73 @@ Implied Volatility Calculation: Estimate the implied volatility based on the mar
 Probability of Expiring In-the-Money: Calculate the probability of a call or put option expiring in-the-money.
 Black-Scholes Formulas
 For a European call option on a non-dividend-paying stock, the Black-Scholes formula is:
-C
-(
-S
-t
-,
-t
-)
+
+𝐶
 =
-Φ
+𝑆
+⋅
+𝑁
 (
-d
+𝑑
 1
 )
-S
-t
 −
-Φ
+𝐾
+⋅
+𝑒
+−
+𝑟
+𝑇
+⋅
+𝑁
 (
-d
+𝑑
 2
 )
-K
-e
-−
-r
-T
-
+C=S⋅N(d 
+1
+​
+ )−K⋅e 
+−rT
+ ⋅N(d 
+2
+​
+ )
 For a European put option:
 
-P
-(
-S
-t
-,
-t
-)
+𝑃
 =
-Φ
+𝐾
+⋅
+𝑒
+−
+𝑟
+𝑇
+⋅
+𝑁
 (
 −
-d
+𝑑
 2
 )
-K
-e
 −
-r
-T
-−
-Φ
+𝑆
+⋅
+𝑁
 (
 −
-d
+𝑑
 1
 )
-S
-t
+P=K⋅e 
+−rT
+ ⋅N(−d 
+2
+​
+ )−S⋅N(−d 
+1
+​
+ )
 where:
 
 𝐶
@@ -193,4 +200,5 @@ put_in_the_money(S, K, T, r, sigma): Calculate the probability that a put option
 call_implied_volatility(price, S, K, T, r): Estimate implied volatility for a call option given its market price.
 put_implied_volatility(price, S, K, T, r): Estimate implied volatility for a put option given its market price.
 Usage
-This code can be used to price European call and put options and to gain insights into the behavior of options in various market conditions
+This code can be used to price European call and put options and to gain insights into the behavior of options in various market conditions.
+
