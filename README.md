@@ -1,5 +1,7 @@
 
 Black-Scholes Option Pricing Model in Python
+
+
 This project implements the Black-Scholes model to calculate the prices of European-style call and put options. The Black-Scholes model is a widely used analytical solution for pricing options, which allows traders, investors, and researchers to estimate the fair market value of European options on non-dividend-paying stocks. The project includes calculations for implied volatility and probability of options expiring in-the-money.
 
 Features
@@ -9,37 +11,7 @@ Probability of Expiring In-the-Money: Calculate the probability of a call or put
 Black-Scholes Formulas
 For a European call option on a non-dividend-paying stock, the Black-Scholes formula is:
 
-𝐶
-=
-𝑆
-⋅
-𝑁
-(
-𝑑
-1
-)
-−
-𝐾
-⋅
-𝑒
-−
-𝑟
-𝑇
-⋅
-𝑁
-(
-𝑑
-2
-)
-C=S⋅N(d 
-1
-​
- )−K⋅e 
-−rT
- ⋅N(d 
-2
-​
- )
+
 For a European put option:
 
 𝑃
