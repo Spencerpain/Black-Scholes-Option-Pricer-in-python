@@ -13,19 +13,23 @@ Implied Volatility Calculation: Estimate the implied volatility based on the mar
 Probability of Expiring In-the-Money: Calculate the probability of a call or put option expiring in-the-money.
 
 
+
+
 Black-Scholes Formulas
+
+
 
 
 For a European call option on a non-dividend-paying stock, the Black-Scholes formula is:
 
 𝐶=𝑆⋅𝑁(𝑑1)−𝐾⋅𝑒^(-𝑟𝑇)⋅𝑁(𝑑2)
 
+
 For a European put option:
 
 P = K*e^(-rT)*N(-d2)-S*N(-d1)
 
 where:
-
 
 C: Call option price
 
@@ -44,6 +48,7 @@ r: Risk-free interest rate
 N(d): Cumulative distribution function of the standard normal distribution
 
 
+
 Intermediate Calculations for d1 and d2
  
 The values d1 and d2 are given by:
@@ -53,6 +58,8 @@ d2 = d1 - σ√T
 
 ​
 d1 and d2 represent the standardized values of the underlying asset’s expected return, adjusted for time and volatility.
+
+
 
 Methods
 The following methods are provided in the BlackScholes class:
