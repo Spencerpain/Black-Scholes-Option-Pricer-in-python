@@ -13,9 +13,9 @@ The Black-Scholes model is a widely used mathematical model for pricing European
 ## Black-Scholes Formulas
 
 1. **Call Option Price**:
-   \[
-   C = S \cdot N(d_1) - K \cdot e^{-rT} \cdot N(d_2)
-   \]
+   
+   C = S * N(d1) - K * e^(-r * T) * N(d2)
+   
    where:
    - \( S \): Current stock price
    - \( K \): Strike price
@@ -24,20 +24,15 @@ The Black-Scholes model is a widely used mathematical model for pricing European
    - \( N(d) \): Cumulative distribution function of the standard normal distribution
    - \( d_1 \) and \( d_2 \): Calculated as follows:
    
-   \[
-   d_1 = \frac{\ln\left(\frac{S}{K}\right) + \left(r + \frac{\sigma^2}{2}\right) T}{\sigma \sqrt{T}}
-   \]
-   \[
-   d_2 = d_1 - \sigma \sqrt{T}
-   \]
+  d1 = [ln(S / K) + (r + sigma^2 / 2) * T] / (sigma * sqrt(T)) 
+  d2 = d1 - sigma * sqrt(T)
 
 2. **Put Option Price**:
-   \[
-   P = K \cdot e^{-rT} \cdot N(-d_2) - S \cdot N(-d_1)
-   \]
+
+   P = K * e^(-r * T) * N(-d2) - S * N(-d1)
 
 3. **Probability of Ending In-the-Money**:
-   - **Call Option**: The probability that the call option will end up in-the-money (i.e., the stock price at expiration will be above the strike price) is given by \( N(d_2) \).
+   - **Call Option**: The probability that the call option will end up in-the-money (i.e., the stock price at expiration will be above the strike price) is given by N(d2).
    - **Put Option**: The probability that the put option will end up in-the-money is \( 1 - N(d_2) \).
 
 4. **Implied Volatility**:
