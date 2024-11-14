@@ -25,6 +25,7 @@ The Black-Scholes model is a widely used mathematical model for pricing European
    - \( d_1 \) and \( d_2 \): Calculated as follows:
    
   d1 = [ln(S / K) + (r + sigma^2 / 2) * T] / (sigma * sqrt(T)) 
+  
   d2 = d1 - sigma * sqrt(T)
 
 2. **Put Option Price**:
