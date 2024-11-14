@@ -1,6 +1,6 @@
 # Black-Scholes Option Pricing Model
 
-This project implements the Black-Scholes model to calculate prices and probabilities for European call and put options without dividends. It also includes functions for calculating implied volatility.
+This project implements the Black-Scholes model to calculate prices and probabilities for European call and put options (without dividends). It also includes functions for calculating implied volatility.
 
 ## Overview
 
