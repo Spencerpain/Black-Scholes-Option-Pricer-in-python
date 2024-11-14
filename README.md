@@ -1,84 +1,70 @@
-Black-Scholes Option Pricing Model in Python
+# Black-Scholes Option Pricing Model
 
+This project implements the Black-Scholes model to calculate prices and probabilities for European call and put options without dividends. It also includes functions for calculating implied volatility.
 
-This project implements the Black-Scholes model to calculate the prices of European-style call and put options. The Black-Scholes model is a widely used analytical solution for pricing options, which allows traders, investors, and researchers to estimate the fair market value of European options on non-dividend-paying stocks. The project includes calculations for implied volatility and probability of options expiring in-the-money.
+## Overview
 
-Features
+The Black-Scholes model is a widely used mathematical model for pricing European options. This implementation calculates:
 
+- **Call and Put Option Prices**: Using the Black-Scholes formula.
+- **Probability of Ending In-the-Money**: The likelihood that an option will expire in-the-money.
+- **Implied Volatility Calculation**: Based on a given option price, the model estimates implied volatility.
 
-European Call and Put Option Pricing: Calculate the price of European call and put options based on the Black-Scholes formula.
+## Black-Scholes Formulas
 
-Implied Volatility Calculation: Estimate the implied volatility based on the market price of an option.
+1. **Call Option Price**:
+   \[
+   C = S \cdot N(d_1) - K \cdot e^{-rT} \cdot N(d_2)
+   \]
+   where:
+   - \( S \): Current stock price
+   - \( K \): Strike price
+   - \( T \): Time to expiration (in years)
+   - \( r \): Risk-free interest rate
+   - \( N(d) \): Cumulative distribution function of the standard normal distribution
+   - \( d_1 \) and \( d_2 \): Calculated as follows:
+   
+   \[
+   d_1 = \frac{\ln\left(\frac{S}{K}\right) + \left(r + \frac{\sigma^2}{2}\right) T}{\sigma \sqrt{T}}
+   \]
+   \[
+   d_2 = d_1 - \sigma \sqrt{T}
+   \]
 
-Probability of Expiring In-the-Money: Calculate the probability of a call or put option expiring in-the-money.
+2. **Put Option Price**:
+   \[
+   P = K \cdot e^{-rT} \cdot N(-d_2) - S \cdot N(-d_1)
+   \]
 
+3. **Probability of Ending In-the-Money**:
+   - **Call Option**: The probability that the call option will end up in-the-money (i.e., the stock price at expiration will be above the strike price) is given by \( N(d_2) \).
+   - **Put Option**: The probability that the put option will end up in-the-money is \( 1 - N(d_2) \).
 
+4. **Implied Volatility**:
+   Implied volatility is estimated by iteratively adjusting volatility until the theoretical option price matches the observed market price. This project uses a simple iterative search to approximate implied volatility.
 
+## Features
 
-Black-Scholes Formulas
+- **Option Pricing**: Computes prices for both call and put options using the Black-Scholes model.
+- **In-the-Money Probability**: Calculates the probability that a call or put option will end in-the-money at expiration.
+- **Implied Volatility**: Finds the implied volatility for call and put options based on the target option price.
 
+## Requirements
 
+- Python 3.x
+- `numpy`
+- `scipy`
 
+## Installation
 
-For a European call option on a non-dividend-paying stock, the Black-Scholes formula is:
+1. Clone the repository:
 
-𝐶=𝑆⋅𝑁(𝑑1)−𝐾⋅𝑒^(-𝑟𝑇)⋅𝑁(𝑑2)
+2. Install required packages
 
+3. Choose values of S, K, T, r, and sigma
 
-For a European put option:
+4. Run the code
 
-P = K*e^(-rT)*N(-d2)-S*N(-d1)
-
-where:
-
-C: Call option price
-
-P: Put option price
-
-S: Current stock price
-
-K: Strike price of the option
-
-T: Time to expiration (in years)
-
-r: Risk-free interest rate
-
-σ: Volatility (standard deviation) of the stock price
-
-N(d): Cumulative distribution function of the standard normal distribution
-
-
-
-Intermediate Calculations for d1 and d2
- 
-The values d1 and d2 are given by:
-
-d1 = (ln(S/K)+(r+σ^2/2)*T)/σ√T
-d2 = d1 - σ√T
-
-​
-d1 and d2 represent the standardized values of the underlying asset’s expected return, adjusted for time and volatility.
-
-
-
-Methods
-The following methods are provided in the BlackScholes class:
-
-call_price(S, K, T, r, sigma): Calculate the price of a call option.
-
-put_price(S, K, T, r, sigma): Calculate the price of a put option.
-
-call_in_the_money(S, K, T, r, sigma): Calculate the probability that a call option will be in-the-money at expiration.
-
-put_in_the_money(S, K, T, r, sigma): Calculate the probability that a put option will be in-the-money at expiration.
-
-call_implied_volatility(price, S, K, T, r): Estimate implied volatility for a call option given its market price.
-
-put_implied_volatility(price, S, K, T, r): Estimate implied volatility for a put option given its market price.
-
-
-Usage
-
-
-This code can be used to price European call and put options and to gain insights into the behavior of options in various market conditions.
-
+   ```bash
+   git clone https://github.com/yourusername/black-scholes-option-pricing.git
+   cd black-scholes-option-pricing
