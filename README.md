@@ -1,66 +1,83 @@
-# Black-Scholes Option Pricing Model
+# Black-Scholes Option Pricing Suite
 
-This project implements the Black-Scholes model to calculate prices and probabilities for European call and put options (without dividends). It also includes functions for calculating implied volatility.
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://black-scholes-option-pricer-in-python-txajqbslrwvq7y9yubga3f.streamlit.app/)
 
-## Overview
+**Live App:** https://black-scholes-option-pricer-in-python-txajqbslrwvq7y9yubga3f.streamlit.app/
 
-The Black-Scholes model is a widely used mathematical model for pricing European options. This implementation calculates:
+---
 
-- **Call and Put Option Prices**: Using the Black-Scholes formula.
-- **Probability of Ending In-the-Money**: The likelihood that an option will expire in-the-money.
-- **Implied Volatility Calculation**: Based on a given option price, the model estimates implied volatility.
+## What This Is
 
-## Black-Scholes Formulas
+This is a professional-grade options pricing and risk analysis tool built in Python. It prices financial derivatives (options contracts) using multiple industry-standard models, computes all standard risk metrics (Greeks), and visualizes how option prices and risk change across market conditions.
 
-1. **Call Option Price**:
-   
-   C = S * N(d1) - K * e^(-r * T) * N(d2)
-   
-   where:
-   - \( S \): Current stock price
-   - \( K \): Strike price
-   - \( T \): Time to expiration (in years)
-   - \( r \): Risk-free interest rate
-   - \( N(d) \): Cumulative distribution function of the standard normal distribution
-   - \( d_1 \) and \( d_2 \): Calculated as follows:
-   
-  d1 = [ln(S / K) + (r + sigma^2 / 2) * T] / (sigma * sqrt(T)) 
-  
-  d2 = d1 - sigma * sqrt(T)
+An **option** is a financial contract that gives the buyer the right — but not the obligation — to buy or sell an asset at a set price (the strike) before a set date (expiry). Pricing these contracts correctly is one of the core problems in quantitative finance.
 
-2. **Put Option Price**:
+---
 
-   P = K * e^(-r * T) * N(-d2) - S * N(-d1)
+## Models
 
-3. **Probability of Ending In-the-Money**:
-   - **Call Option**: The probability that the call option will end up in-the-money (i.e., the stock price at expiration will be above the strike price) is given by N(d2).
-   - **Put Option**: The probability that the put option will end up in-the-money is \( 1 - N(d_2) \).
+### Black-Scholes (1973)
+The foundational closed-form model for pricing European options. Assumes constant volatility and no dividends. Extended here with the **Merton continuous dividend model** — a one-line adjustment to the d1 formula that accounts for dividend yield, making it applicable to dividend-paying stocks and index options.
 
-4. **Implied Volatility**:
-   Implied volatility is estimated by iteratively adjusting volatility until the theoretical option price matches the observed market price. This project uses a simple iterative search to approximate implied volatility.
+### Monte Carlo Simulation
+Simulates thousands of possible future stock price paths using Geometric Brownian Motion and averages the discounted payoffs. Returns both a price estimate and a **standard error**, giving a confidence interval around the result. Also prices **Asian options** (path-dependent, no closed-form solution).
+
+### Binomial Tree (Cox-Ross-Rubinstein)
+Builds a recombining price tree and works backwards from expiry to price the option. Unlike Black-Scholes, this model can handle **American options**, which allow early exercise. The early exercise premium — the extra value of being able to exercise before expiry — is computed and displayed. This is critical for pricing American puts and dividends-adjusted calls.
+
+---
 
 ## Features
 
-- **Option Pricing**: Computes prices for both call and put options using the Black-Scholes model.
-- **In-the-Money Probability**: Calculates the probability that a call or put option will end in-the-money at expiration.
-- **Implied Volatility**: Finds the implied volatility for call and put options based on the target option price.
+### Implied Volatility — Newton-Raphson Solver
+Given a market option price, backs out the implied volatility the market is pricing in. Uses the Newton-Raphson method (the industry standard) instead of a brute-force scan — converges in fewer than 10 iterations with near-machine precision.
 
-## Requirements
+### Greeks
+The five standard sensitivities used by options traders and risk desks for hedging:
 
-- Python 3.x
-- `numpy`
-- `scipy`
+| Greek | Measures |
+|-------|----------|
+| **Delta (Δ)** | Price change per $1 move in the underlying |
+| **Gamma (Γ)** | Rate of change of Delta — peaks at-the-money |
+| **Vega (ν)** | Price change per 1% move in volatility |
+| **Theta (θ)** | Time decay — price lost per calendar day |
+| **Rho (ρ)** | Price change per 1% move in interest rates |
 
-## Installation
+### Put-Call Parity Checker
+Verifies that call and put prices satisfy the no-arbitrage identity: `C - P = S·e^(-qT) - K·e^(-rT)`. A violation would mean a risk-free profit opportunity exists — useful for validating model output.
 
-1. Clone the repository:
+### Visualizations
+- **Greeks vs Spot** — how each Greek evolves as the stock price moves through ATM
+- **Option Price Heatmap** — option price across a spot × volatility grid, showing sensitivity at a glance
+- **Delta & Gamma across Moneyness** — the classic gamma risk chart
+- **Live IV Smile** — fetches a real options chain and plots implied volatility across strikes for a single expiry
+- **Live IV Surface** — 3D implied volatility surface across all liquid strikes and expiries. This is what a volatility desk actually looks at — the shape reveals market-implied skew, term structure, and risk premium
 
-2. Install required packages
+---
 
-3. Choose values of S, K, T, r, and sigma
+## Tech Stack
 
-4. Run the code
+- `numpy` / `scipy` — numerical computation and statistics
+- `matplotlib` — plotting
+- `yfinance` — live options chain data
+- `streamlit` — web interface
 
-   ```bash
-   git clone https://github.com/yourusername/black-scholes-option-pricing.git
-   cd black-scholes-option-pricing
+## Installation (Local)
+
+```bash
+git clone https://github.com/Spencerpain/Black-Scholes-Option-Pricer-in-python.git
+cd Black-Scholes-Option-Pricer-in-python
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+## File Structure
+
+```
+├── BlackScholesClass.py   # BS model, Greeks, Newton-Raphson IV, Merton, put-call parity
+├── MonteCarlo.py          # Monte Carlo pricer (European + Asian)
+├── BinomialTree.py        # CRR binomial tree (European + American, early exercise premium)
+├── Visualizations.py      # All plots including live IV surface
+├── app.py                 # Streamlit web app
+└── requirements.txt
+```
